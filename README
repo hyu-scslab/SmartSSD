@@ -6,6 +6,7 @@ The postgres code for VLDB 2022 submission, "Deploying Computational Storage for
 
 Lookup for code sections wrapped up with the definitions listed below.
 
+
 | Flag | Content |
 | ------ | ------ |
 | SMARTSSD | Code related to SmartSSD operations for PostgreSQL. (e.g., integration between postgres and SmartSSD) |
