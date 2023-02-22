@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#BASE_DIR="$( cd "$( dirname "$0" )" && pwd )" # myrocks dir
+BASEDIR=$(dirname `pwd`)
+BUILD_DIR="${BASE_DIR}/build"
+INST_DIR="${BASE_DIR}/inst"
+DATA_DIR="${BASE_DIR}/inst/data"
+SRC_DIR="${BASE_DIR}/myrocks"
+
+echo $SRC_DIR
+
+# Parse parameters
+for i in "$@"
+do
+  case $i in
+    --mysql-port=*)
+      PORT="${i#*=}"
+      shift
+      ;;
+
+    *)
+      # unknown option
+      echo "Unknown option: ${i}"
+      exit
+      ;;
+  esac
+done
+
+cd ${SRC_DIR}
+
+make -j 32
+make install -j 32

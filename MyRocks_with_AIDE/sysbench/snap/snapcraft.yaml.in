@@ -1,0 +1,36 @@
+name: sysbench
+version: @PACKAGE_VERSION@
+summary: Scriptable database and system performance benchmark
+description: |
+ sysbench is a scriptable multi-threaded benchmark tool based on
+ LuaJIT. It is most frequently used for database benchmarks, but can also
+ be used to create arbitrarily complex workloads that do not involve a
+ database server.
+ 
+ sysbench comes with the following bundled benchmarks:
+
+ - oltp_*.lua: a collection of OLTP-like database benchmarks
+ - fileio: a filesystem-level benchmark
+ - cpu: a simple CPU benchmark
+ - memory: a memory access benchmark
+ - threads: a thread-based scheduler benchmark
+ - mutex: a POSIX mutex benchmark
+
+grade: stable
+confinement: classic
+
+apps:
+  sysbench:
+    command: sysbench
+    plugs:
+      - network
+
+parts:
+  sysbench:
+    source: .
+    plugin: autotools
+    build-packages:
+      - libmysqlclient-dev
+    stage-packages:
+      - libmysqlclient20
+      - libaio1

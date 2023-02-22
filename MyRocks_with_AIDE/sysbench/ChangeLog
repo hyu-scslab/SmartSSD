@@ -1,0 +1,493 @@
+2020-04-24  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.20
+	* build/CI/packaging: Add arm64 to Travis CI matrix (#358)
+	* build/CI/packaging: add Ubuntu Focal
+	* build/CI/packaging: remove Fedora Rawhide from CI matrix
+	* build/CI/packaging: fix regression tests to work with MySQL 8.0.19+
+	* build/CI/packaging: fix macOS builds in Travis
+	* build/CI/packaging: remove Ubuntu Disco (EOL)
+
+2019-12-08  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.19
+	* build/CI/packaging: fix Ubuntu packaging for Bionic and later versions
+	* regression tests: compatibility fix for PostgreSQL 12
+	* build/CI/packaging: fix macOs builds in Travis
+	* build/CI/packaging: add Fedora 31.
+
+2019-10-21  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.18
+	* build/CI/packaging: add Ubuntu Eoan.
+	* build/CI/packaging: remove Ubuntu Cosmic (EOL).
+	* build/CI/packaging: add CentOS 8.
+	* build/CI/packaging: add Ubuntu Disco.
+	* build/CI/packaging: remove Ubuntu Trusty (EOL).
+	* build/CI/packaging: remove Fedora 28 (EOL).
+	* build/CI/packaging: add Fedora 30.
+	* build/CI/packaging: cherry-pick fix for LuaJIT/LuaJIT#484 to
+	fix builds on macOS Mojave.
+	* build/CI/packaging: add Debian Buster
+
+2019-03-15  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.17
+	* build/CI/packaging: update RPM spec to support RHEL8-beta
+	(thanks to Alexey Bychko for the patch)
+	* regression tests: remove unnecessary error leading to opt_rate.t instability.
+	* --rate mode: return a non-zero exit code on event queue
+	overflow.
+	* --rate mode: fix a bogus error about eventgen thread termination
+
+2018-12-16  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.16
+	* build/CI/packaging: add Ubuntu Cosmic.
+	* build/CI/packaging: add Fedora 29.
+	* build/CI/packaging: remove Fedora 27 (EOL).
+	* SQL API: fix GH-282 (Mysql's fetch_row() is broken)
+	* --rate mode: fix latency stats skew on low rates
+	* Lua: Add /usr/share/lua/5.1 to LUA_PATH and /usr/lib/lua/5.1
+	to LUA_CPATH.
+	* build/CI/packaging: add -Wvla to default compiler flags.
+	* build/CI/packaging: fix debian/changelog format
+	* build/CI/packaging: fix buildpack.sh to not push multiple file
+	types to packagecloud.
+	* build/CI/packaging: add libaio-dev to Debian/Ubuntu build
+	dependencies.
+
+2018-07-03  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.15
+	* CI/build/packaging: add Fedora 28
+	* CI/build/packaging: add Ubuntu Bionic
+	* CI/build/packaging: remove Fedora 26 (EOL)
+	* CI/build/packaging: remove Debian Wheezy (EOL)
+	* fileio: fix GH-229 (--file-fsync-freq=0 seems to prevent
+	fsync() at the end of the test)
+	* command line: improve parsing of boolean command line options
+	* tests: fix GH-220 (Testsuite api_sql_mysql.t failed ...)
+	* tests: fix GH-223 (test failure on ppc64)
+	* tests: fix opt_help.t to pass when the binary is not
+	configured with MySQL support
+	* MySQL driver: use it by default in DB benchmarks
+
+2018-04-01  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.14
+	* reports: fix JSON stats reporter to produce valid JSON
+	(GH-195)
+	* Lua SQL API: don't crash when query_row() is called with a
+	SELECT returning empty result set
+	* Lua SQL API: don't crash when bulk insert API calls are used
+	out of order
+	* regression tests: make PostgreSQL tests compatible with the
+	new dump format introduced in 10.3
+	* regression tests: minor stability and coverage improvements
+
+2018-02-17  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.13
+	* remove Ubuntu Zesty from CI/build/packaging matrices (EOL)
+	* minor cleanups in build scripts
+	* improve report formatting for long latency values
+	* fileio: --file-extra-flags now accepts a list of flags rather
+	than just a single value
+	* OLTP: re-prepare prepared statements after reconnects, i.e. in
+	cases when a server connection is lost and sysbench is
+	configured to ignore such errors
+
+2018-01-17  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.12
+	* improve --rate mode precision for high argument values
+	* add Fedora Rawhide and Debian Sid to CI matrix
+	* fix compile-time architecture detection for some Broadwell
+	CPUs which were incorrectly identified as Core 2.
+	* remove build dependency on xxd (and vim-minimal package)
+	* fix Lua API to correctly stop the benchmark when event()
+	returns a value other than nil or false (thanks to caojiafeng
+	for the patch)
+	* fix the fileio benchmark when the specified file size is not a
+	multiple of block size
+	* fix the fileio benchmark to throw a descriptive error when the
+	specified file size does not match the size of files created by
+	'prepare'
+	* remove Fedora 25 from CI/build/packaging matrices (EOL)
+	* minor improvements in tests and documentation.
+
+2017-12-09  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.11
+	* add Debian Stretch to CI/build/packaging matrices
+	* add Fedora 27 to CI/build/packaging matrices
+	* make statistic counters usable from Lua scripts
+	* fix the PostgreSQL driver to be compatible with CockroachDB
+	(GH-180)
+	* fix oltp_insert.lua to work correctly when both --tables and
+	--threads are greater than 1 (GH-178)
+	* fix FreeBSD builds by adding -rdynamic to the default linker
+	flags (GH-174)
+	* minor documentation updates
+
+2017-10-25  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.10
+	* fixed PK conflicts in oltp_insert.lua by creating empty tables
+	on 'prepare'
+	* made sysbench.opt available to init()/done() by exporting it
+	to the global Lua state
+	* added Fedora 26 (both x86_64 and AArch64) to the list of
+	supported and tested distributions
+	* fixed GH-172: sysbench 1.0.9 doesn't build with mariadb 10.2.8
+	* add the /usr/local LuaRocks root directory to default LUA_PATH
+	and LUA_CPATH
+	* removed Fedora 24, Ubuntu Precise, Yakkety from default build
+	matrices
+	* added Ubuntu Artful to default build matrices
+
+2017-09-05  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.9
+	* fixed oltp_delete.lua to not use INSERT statements for
+	consistency with other oltp_* benchmarks (GH-168)
+	* added a workaround for MySQL bug #87337 "8.0.2 reintroduces
+	my_bool to client API"
+	* fixed building on on Debian GNU/kFreeBSD (GH-161)
+	* fixed building against MariaDB 10.2 (thanks to Xavier Bachelot
+	for the patch, GH-160)
+
+2017-07-04  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.8
+	* fixed api_report test for slow machines (thanks to @jcfp)
+	* fileio: suggest to run prepare step on missing files (thanks
+	to Heinrich Schuchardt)
+	* JSON reports: removed an erroneous trailing comma (GH-139)
+	* added events per second to the CPU benchmark report (GH-140)
+	* fixed db_connect() in legacy SQL API to use the default value
+	for --db-driver (GH-146)
+	* removed busy-wait in the bounded event generation mode
+	(--rate) to avoid CPU hogging
+
+2017-05-15  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.7
+	* Ubuntu Zesty added to package build matrix
+	* fixed GH-130: Mutex Benchmark Documentation
+	* fixed latency reports in the --rate mode
+	* fixed compiler warnings when building against MySQL 8.0 client
+	libraries
+
+2017-04-13  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.6
+	* no functional changes
+	* many build- and packaging-related improvements
+	* Linux packages are now automatically built using Travis CI and
+	packpack, hosted by packagecloud.io
+
+2017-04-02  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.5
+	* various build-related documentation updates
+	* benchmark can now be specified by a module name on the command
+	line
+	* memory benchmark: performance and scalability improvements
+	* fix ARMv6 builds with system ConcurrencyKit
+	* fix GH-123: Table already exists error on prepare
+	* fix GH-121: make buildhost cpudetection optional
+
+2017-03-13  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.4
+	* fixed a number of compilation errors and warnings that were
+	specific to 32-bit platforms
+	* bundle cram (regression tests framework) and use it by default
+	in 'make test'
+	* bundled ConcurrencyKit updated to 0.6.0
+
+2017-02-26  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.3
+	* LuaJIT scalability improvements for non-x86 architectures
+	* performance optimizations in oltp_read_write.lua to avoid Lua
+	string management
+	* fixed Illumos builds (thanks to Dillon Amburgey)
+
+2017-02-17  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.2
+	* improved scalability for --report-checkpoints mode
+	* fix builds on CentoOS 6 and autoconf 2.63
+	* support for Snap (http://snapcraft.io) packages
+
+2017-02-05  Alexey Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.1
+	* fix clock_gettime runtime failure built with macOS 10.11 and
+	Xcode 8.x
+	
+2017-02-04  Aleksei Kopytov  <akopytov@gmail.com>
+
+	* version 1.0.0
+	* too much time and too many changes since the previous formal
+	release, so briefly:
+	* Lua scripts instead of hard-coded C tests for database
+	("oltp") benchmarks + ability to create custom workloads
+	* much better single-threaded performance
+	* much better scalability
+	* improvements and cleanups in command line syntax and options
+	* latency histograms in cumulative statistic reports
+	* report hooks to print statistics in custom formats
+	(CSV/JSON/XML/etc.)
+	* Dropped Windows support
+	* Dropped support for Oracle, Drizzle and libattachsql drivers
+
+2006-10-10  Alexey Kopytov <alexeyk@mysql.com>
+
+	* Removed the debugging code in OLTP test which got into 0.4.7 by mistake
+	* Handle ER_CHECKREAD in the same way as deadlocks in the MySQL driver
+	* version 0.4.8
+	
+2006-05-28  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* count fsync() time as request execution time in file-fsync-all mode
+
+2006-05-24  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added --oltp-reconnect option
+
+2006-05-18  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Allow build with non-gcc compilers
+	* Fixed random numbers generation on Solaris
+	* Added --mysql-ssl option
+	* version 0.4.7
+	
+2006-04-03  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added a warning for inaccurate gettimeofday() implementations
+	* version 0.4.6
+
+2006-03-10  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed crash at the end of OLTP test
+
+2006-03-03  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Made auto_increment id column optional
+	* Use TYPE= or ENGINE= in MySQL driver depending on the version of client libraries
+
+2006-01-17  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* version 0.4.5
+	* Added several hosts capability to MySQL driver
+	* Fixed several memory leaks in OLTP test
+
+2005-12-14  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Renamed option 'mysql-table-type' to 'mysql-table-engine'
+	* It's now possible to pass arbitrary engine names to MySQL driver
+	* Transactions support must be explicitly specified with 
+	'mysql-engine-trx' option for those engines, which are unknown to SysBench
+
+2005-09-27  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Changed 'thread fairness' calculation from percents to stddev
+	* Added validation mode to OLTP test (--validate switch)
+	* Remove auto_increment from the 'id' field before running OLTP tests
+	* Print separate time for query execution and result fetching in --debug mode
+	* version 0.4.3
+
+2005-07-25  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Minor cleanups in help messages
+	* Several FreeBSD-related fixes
+	* Fixed the Oracle driver
+	* Version 0.4.1
+
+2005-03-04  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed a lot of small bugs, including portability issues on Mac OS X, 
+	64-bit platforms and old MySQL versions
+	* Documentation added to the main tree
+	* New validation mode in fileio test
+
+2005-01-27  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed compilation on Solaris
+	* Added call to thr_setconcurrency() on Solaris
+	* Fixed an overflow bug in sb_timer_current()
+	* Changed the default number of threads to 1
+	* Added non-transactional mode to the OLTP test
+	* Fixed bug with excessive number of connections in OLTP test
+	* Handle ER_LOCK_WAIT_TIMEOUT in the same way as ER_LOCK_DEADLOCK
+	* Version 0.3.2
+
+2004-07-27  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed MySQL driver to use new PS API in MySQL >= 4.1.2
+
+2004-07-12  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed final fsync in random I/O requests
+	* Fixed several race conditions
+
+2004-07-09  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Removed --oltp-time-limit option (obsoleted by --max-time)
+
+2004-07-06  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Changed statistics output to more human-readable format
+
+2004-07-04  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added new logger interface to internal API
+	* Modified all tests to use the new logger interface
+
+2004-06-17  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed table type autodetection with MySQL >= 4.1
+
+2004-06-06  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added preliminary support of prepared statements to DB API
+
+2004-05-31  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added slow-mmap mode for 32-bit boxes in fileio test 
+
+2004-05-30  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed compilation with gcc >= 3.3
+	* Fixed 'prepare' command for sequential write test
+
+2004-05-26  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Changed formatting of file sizes in output
+	* Fixed type cast warning on SuSE 8.1 
+
+2004-05-21  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added mutex performance benchmark 
+
+2004-05-12  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Extended memory benchmark to calculate more useful results
+
+2004-05-10  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Split test file creation, test running and cleaning up into separate 
+	commands (prepare, run, cleanup) for fileio test
+
+2004-05-05  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Removed limit on maximum block size for fileio test 
+
+2004-05-04  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* added --max-time option to limit total test execution time 
+
+2004-05-03  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed compilation with --without-mysql option. 
+
+2004-04-13  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added mmaped I/O support to fileio test
+
+2004-04-11  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Changed default table size to a lower value in OLTP test
+
+2004-04-07  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added automatic table type detection to MySQL driver
+	* Changed the default table type for MySQL driver to InnoDB
+	* Added support for BDB and NDB table types
+
+2004-04-06  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added autoconf macro to handle older (incompatible) version of 
+	libaio.h
+
+2004-04-05  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed compilation on 64-bit systems
+	* Replaced Linux AIO calls with more portable equivalents
+
+2004-04-04  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added parameter to specify maximum number of queued operations
+	in fileio async mode (file-async-backlog)
+	* Added parameter to specify extra open() flags (file-extra-flags)
+	* Fixed memory allocation bug in command line parser
+
+2004-04-02  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added Linux asynchronous I/O support to fileio test
+	* Fixed bug with statistic counters
+
+2004-04-01  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added test file creation to fileio test
+	* Added read-only mode to OLTP test 
+
+2004-03-31  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Close database connections in OLTP test
+	* Added file-fsync-all mode for fileio test
+	
+2004-03-30  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Added myisam-max-rows option for MySQL driver
+	* Fixed configure.ac for cases when no MySQL libraries found
+
+2004-03-10  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Implement proper handling of table locks in OLTP test
+
+2004-03-09  Alexey Kopytov  <alexeyk@mysql.com>
+
+        * Recognize MySQL table type when creating test database
+	* Fix driver-specific options
+	* Now it's possible to pass MySQL root directory in --with-mysql option
+	* Trim trailing '.libs' if user passed it in --with-mysql-libs option
+	to configure
+
+2004-03-08  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Build drivers and tests as separate libraries (first step to 
+	dynamically loaded modules)
+	* Display help when required arguments are missing in fileio test
+	* Changed code formatting to match MySQL coding guidelines
+
+2004-03-04  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Generalized DB-dependent code
+	* Added 'database capabilities' feature
+
+2004-02-28  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Fixed possible memory leak in sql request generator
+
+2004-03-27  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Split OLTP code into DB-independent part and MySQL driver 
+
+2004-02-23  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Use libtool for linking with external libraries
+	* Statically link external libraries when they are not installed
+
+2004-02-19  Alexey Kopytov  <alexeyk@mysql.com>
+
+	* Print more info when configure finds no MySQL development files
+	* Added --with-mysql-includes and --with-mysql-libs to configure
+	* Fixed compilation error when compiling without MySQL support
+	* Combine several inserts into one query to speed up database creation
+	
+

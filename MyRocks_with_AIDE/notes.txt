@@ -1,0 +1,73 @@
+[MyRocks]
+1. Modify the port and paths inside config/my.cnf
+  edit every path with myrocks-smartssd to your path
+  basedir, datadir, socket, general_log_file, log_error, socket (bottom)
+
+2. Build the project using cmake
+  # In myrocks-smartssd directory
+  ./cmake-debug.sh --mysql-port=12345
+  # cmake-debug.sh consists of cmake, make and make install
+
+  # The install directory is myrocks-smartssd/inst
+
+3. Run the install db script in inst directory
+  # In myrocks-smartssd directory
+  cd inst
+
+  # Run the following command with the path of the options modified to your path
+  ./scripts/mysql_install_db \
+    --defaults-file=/opt/pm883-1/jaechan/myrocks-smartssd/config/my.cnf \
+    --user=root \
+    -datadir=/opt/pm883-1/jaechan/myrocks-smartssd/inst/data
+
+4. Run server, client, etc.
+  # Run server
+  ./bin/mysqld --defaults-file=../config/my.cnf --skip-stack-trace --gdb
+
+  # Terminate server
+  ./bin/mysqladmin -uroot shutdown
+
+  # Run client
+  ./bin/mysql --defaults-file=../config/my.cnf -u root
+
+5. Files
+  Anything you print with std::cout will be printed within: inst/data/error.log
+  RocksDB files (sst, .vi, .i file): ls inst/data/.rocksdb
+
+[Sysbench]
+
+1. Install dependencies
+  # You might need sudo
+  apt -y install make automake libtool pkg-config libaio-dev
+  # For MySQL support
+  apt -y install libmysqlclient-dev libssl-dev
+
+2. Build and install sysbench from source
+  # In myrocks-smartssd directory
+  cd sysbench
+
+  ./autogen.sh
+
+  ./configure \
+    --prefix=/path/to/myrocks-smartssd/sysbench \
+    --with-mysql-includes=/path/to/myrocks-smartssd/inst/include \
+    --with-mysql-includes=/path/to/myrocks-smartssd/inst/lib
+
+  example:
+  ./configure \
+    --prefix=/opt/pm883-1/jaechan/myrocks-smartssd/sysbench \
+    --with-mysql-includes=/opt/pm883-1/jaechan/myrocks-smartssd/inst/include \
+    --with-mysql-libs=/opt/pm883-1/jaechan/myrocks-smartssd/inst/lib
+
+  make -j && make install
+
+3. Create database 'sbtest'
+  Start up the server
+  Open a client
+  Execute query: create database sbtest;
+
+4. Run sysbench.sh in myrocks-smartssd directory
+  ./sysbench.sh (+ options)
+
+  example:
+  ./sysbench.sh --mysql-port=12345 --table-size=10000 --tables=2 --threads=16

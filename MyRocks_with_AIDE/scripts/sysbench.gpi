@@ -1,0 +1,81 @@
+reset
+
+# file parameters
+OUTPUT_FILE=ARG1
+SHORT_LATENCY_FILE=ARG2
+LONG_LATENCY_FILE=ARG3
+TPS_FILE=ARG4
+SPACE_FILE=ARG5
+
+set size 1.0,1.0
+
+# output type set to eps file
+# monochrome is for data line colors on the 3d graph
+set terminal postscript eps color enhanced 27 size 10,5
+
+# encoding
+set encoding utf8
+
+# delimiter for data separation
+#set datafile separator " "
+
+# output file
+set output OUTPUT_FILE
+
+set style line 1 lt 1 lw 3
+set style line 2 lt 1 lw 2 lc rgb "black"
+set style line 3 lt 1 lw 2 lc rgb "red"
+set style line 4 lt 1 lw 2 lc rgb "blue"
+set style line 5 lt 2 lw 1 lc rgb "#FF6863"
+set style line 6 lt 1 lw 2 pt 7 pi -1 ps 1 lc rgb '#0060ad'
+set pointintervalbox 1
+set style arrow 1 heads size screen 0.007,90 fixed filled ls 3
+set style arrow 2 heads size screen 0.007,90 fixed filled ls 4
+
+set tmargin 0
+set bmargin 0
+set lmargin 1
+set rmargin 1
+set multiplot layout 3,1 margins 0.05,0.95,.1,.99 spacing 0,0
+
+set key top right spacing 1.2
+
+set xrange [0:600]
+unset xtics
+unset xlabel
+
+set ylabel "Latency (sec)" rotate parallel offset 0,0
+set yrange [0:3]
+unset ytics
+
+set label 1 "short" at 20,2
+set label 2 "long" at 20,1
+plot SHORT_LATENCY_FILE using 1:(2):($2-$1):(0) with vectors arrowstyle 2 notitle, \
+     LONG_LATENCY_FILE using 1:(1):($2-$1):(0) with vectors arrowstyle 1 notitle 
+#plot SHORT_LATENCY_FILE using 1:($2-$1) with linespoints ls 4 title "short OLAP", \
+#     LONG_LATENCY_FILE using 1:($2-$1) with linespoints ls 4 title "long OLAP"
+
+unset label 1
+unset label 2
+
+set ylabel "TPS (x10^5)" rotate parallel offset 0,0
+set yrange [0.1:2]
+unset ytics
+set y2range [0.1:2]
+set y2tics 1
+plot TPS_FILE using ($1/100000) with lines ls 2 title "TPS"
+#plot TPS_FILE using ($1/1000) with lines ls 2 title "TPS"
+
+# xlabel no the bottom
+set xlabel "Time (sec)" rotate parallel offset 0,1
+set xtics 200
+
+set ylabel "Space usage (GiB)" rotate parallel offset 0,0
+set yrange [0.1:1.5]
+unset ytics
+set y2range [0.1:1.5]
+set y2tics 0.6
+plot SPACE_FILE using 1:($2/1024/1024/1024):(0) with filledcurves ls 5 title "Space"
+#plot LATENCY_FILE using 1:(1):($2-$1):(0) with vectors arrowstyle 1 axes x1y1 title "OLAP latency", \
+#     LATENCY_FILE using 1:(70000):($2-$1):(0) with vectors arrowstyle 1 axes x1y2 title "TPS (x10^4)"
+

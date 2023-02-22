@@ -1,0 +1,6 @@
+[submodule "PostgreSQL_with_AIDE/postgres"]
+	path = PostgreSQL_with_AIDE/postgres
+	url = https://github.com/hyu-scslab/aide_postgres.git
+[submodule "MyRocks_with_AIDE/myrocks"]
+	path = MyRocks_with_AIDE/myrocks
+	url = https://github.com/hyu-scslab/aide_myrocks.git

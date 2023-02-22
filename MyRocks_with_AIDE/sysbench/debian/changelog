@@ -1,0 +1,49 @@
+sysbench (1.0.21-1) unstable; urgency=low
+
+  * add libzstd-dev to build dependencies
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Sun, 24 Jan 2021 13:16:04 +0300
+
+sysbench (1.0.18-1) unstable; urgency=low
+
+  * add libssl-dev to build dependencies
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Sun, 08 Dec 2019 14:02:01 +0300
+
+sysbench (1.0.15-2) unstable; urgency=low
+
+  * add libaio-dev to build dependencies
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Sat, 09 Jul 2018 09:24:42 +0300
+
+sysbench (1.0.12-1) unstable; urgency=low
+
+  * remove vim-common from build dependencies
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Sat, 06 Jan 2018 10:59:42 +0300
+
+sysbench (1.0.11-1) unstable; urgency=low
+
+  * add Debian Stretch support by adding optional build dependency on
+    default-libmysqlclient-dev and replacing python-minimal with python
+    (as minimal does not provide the shlex module required by cram)
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Sat, 09 Dec 2017 19:52:23 +0300
+
+sysbench (1.0.6-1) unstable; urgency=low
+
+  * Add pkg-config, vim-common and python-minimal and libpq-dev to build dependencies.
+  * Fix 'clean' target in rules.
+  * Add ChangeLog and COPYING to docs.
+  * Remove tests/db/*.lua from install.
+  * Pass --without-gcc-arch to configure to not override compiler flags
+    passed by the build system
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Thu, 13 Apr 2017 23:04:34 +0300
+
+sysbench (1.0-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Alexey Kopytov <akopytov@gmail.com>  Wed, 10 Aug 2016 18:04:53 +0300
+

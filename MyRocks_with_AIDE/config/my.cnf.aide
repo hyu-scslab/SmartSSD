@@ -1,0 +1,72 @@
+[mysqld]
+rocksdb
+default-storage-engine=rocksdb
+skip-innodb
+default-tmp-storage-engine=MyISAM
+collation-server=latin1_bin
+
+#log-bin
+#binlog-format=ROW
+skip-log-bin
+sync-binlog=0
+default_time_zone='+00:00'
+secure-file-priv=""
+
+transaction-isolation=REPEATABLE-READ
+lower_case_table_names=1
+
+basedir=/opt/s3d/jaechan/myrocks-smartssd/inst
+datadir=/opt/s3d/jaechan/myrocks-smartssd/inst/data
+socket=/opt/s3d/jaechan/myrocks-smartssd/inst/mysql.sock
+port=7219
+
+# log
+#general_log=1
+#general_log_file=/opt/s3d/jaechan/myrocks-smartssd/inst/data/general.log
+general_log=0
+log_error=/opt/s3d/jaechan/myrocks-smartssd/inst/data/error.log
+log_warnings=0
+#log_warnings=4
+
+# rocksdb
+rocksdb_max_open_files=-1
+rocksdb_wal_recovery_mode=2
+rocksdb_max_background_jobs=24
+rocksdb_max_total_wal_size=1G
+rocksdb_block_size=16384
+rocksdb_block_cache_size=2G
+rocksdb_table_cache_numshardbits=6
+
+# rate limiter
+rocksdb_bytes_per_sync=0
+rocksdb_wal_bytes_per_sync=0
+rocksdb_rate_limiter_bytes_per_sec=1073741824 #100MB/s. Increase if you're running on higher spec machines
+#rocksdb_write_disable_wal=1
+rocksdb_flush_log_at_trx_commit=0
+
+# triggering compaction if there are many sequential deletes (Deletion Triggered Compaction
+rocksdb_compaction_sequential_deletes_count_sd=1
+rocksdb_compaction_sequential_deletes=199999
+rocksdb_compaction_sequential_deletes_window=200000
+
+# read free replication (for some reason, it including this option gives an error)
+#rocksdb_rpl_lookup_rows=0
+
+max_connections=5000
+#rocksdb_max_row_locks=1073741824
+
+rocksdb_default_cf_options=compaction_pri=kMinOverlappingRatio;compression=kNoCompression
+#rocksdb_default_cf_options=write_buffer_size=128m;target_file_size_base=32m;max_bytes_for_level_base=512m;level0_file_num_compaction_trigger=8;level0_slowdown_writes_trigger=20;level0_stop_writes_trigger=30;max_write_buffer_number=10;block_based_table_factory={cache_index_and_filter_blocks=1;filter_policy=bloomfilter:10:false;whole_key_filtering=1};level_compaction_dynamic_level_bytes=true;optimize_filters_for_hits=true;compaction_pri=kMinOverlappingRatio;compression=kNoCompression
+#rocksdb_default_cf_options=block_based_table_factory={cache_index_and_filter_blocks=1;filter_policy=bloomfilter:10:false;whole_key_filtering=1};level_compaction_dynamic_level_bytes=true;optimize_filters_for_hits=true;compaction_pri=kMinOverlappingRatio;compression=kNoCompression
+
+s3d_max_num_of_joins=2
+s3d_target_table=sbtest1
+s3d_kernel_name=/opt/s3d/jaechan/myrocks-smartssd/inst/binary_container_1.xclbin
+
+[mysql]
+socket=/opt/s3d/jaechan/myrocks-smartssd/inst/mysql.sock
+port=7219
+
+# optimized for myrocks
+[mysqld_safe]
+malloc-lib=/usr/lib/x86_64-linux-gnu/libjemalloc.so

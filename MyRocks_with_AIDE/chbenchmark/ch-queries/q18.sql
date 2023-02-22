@@ -1,0 +1,7 @@
+select straight_join     c_last, c_id o_id, o_entry_d, o_ol_cnt, sum(ol_amount)
+from     customer, orders, order_line
+where c_wdid = o_wdc
+     and ol_owd = o_idwd
+group by o_id, o_w_id, o_d_id, c_id, c_last, o_entry_d, o_ol_cnt
+having     sum(ol_amount) > 200
+order by sum(ol_amount) desc, o_entry_d LIMIT 10;
